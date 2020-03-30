@@ -1,4 +1,7 @@
 # BingDesktop
-Download Bing daily picture to local and set to desktop background
+下载Bing的每日图片到本地, 默认路径为E:\Picture\Bing, 然后设置为桌面背景图
 
-Use .py if you are a programmer, or use .exe directly
+1. 提供.py源文件和.exe可执行文件, 各取所需
+2. .exe无法修改默认下载路径, 没有界面, 双击之后就做上面的事情, 延迟10秒并自动退出
+3. 执行成功之后延迟10秒再自动关闭, 可以看到执行成功的提示
+4. 如需每日自动执行, 可以利用Win10自带的"任务计划程序", 设定每日定时执行

@@ -1,16 +1,31 @@
 #coding:utf-8
-'''
+"""
+BSD 2-Clause License
+
+Copyright (c) 2020, Sea Zhou (WeChat: uefi64)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+"""
+
+"""
 Name        : BingDesktop.py
-Version     : 1.01 (Python3 version)
 Usage       : BingDesktop.py
 EXE Package : pyinstaller -F BingDesktop.py
 Description : 通过爬虫获取图片URL和信息, 下载图片到指定位置, 设置墙纸
-Date        : 2020/4/23
-Author      : andy1990zx
+Author      : andy1990zx@163.com
 Change      :
 Data          Name          Version    Description
 2020/4/23     andy1990zx    1.01       Add output string; fix the issue sometime set wallpaper fail
-'''
+"""
 
 import urllib.request
 import requests

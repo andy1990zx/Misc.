@@ -1,31 +1,18 @@
 #coding:utf-8
-"""
-BSD 2-Clause License
-
-Copyright (c) 2020, Sea Zhou (WeChat: uefi64)
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-"""
-
-"""
+'''
 Name        : BingDesktop.py
+Version     : 1.02 (Python3 version)
 Usage       : BingDesktop.py
 EXE Package : pyinstaller -F BingDesktop.py
 Description : 通过爬虫获取图片URL和信息, 下载图片到指定位置, 设置墙纸
-Author      : andy1990zx@163.com
+Date        : 2021/08/09
+Author      : andy1990zx
 Change      :
 Data          Name          Version    Description
-2020/4/23     andy1990zx    1.01       Add output string; fix the issue sometime set wallpaper fail
-"""
+2020/04/23    andy1990zx    1.01       Add output string; fix the issue sometime set wallpaper fail
+2021/08/09    andy1990zx    1.02       Update GetPictureUrlAndInfo to v1.1
+
+'''
 
 import urllib.request
 import requests
@@ -55,15 +42,19 @@ def DownloadPictureToLocal(Picture, LocalFolderPath):
     return FullPath
 
 # 请求网页，解析并获取图片URL和图片信息 (哪里, 谁拍的, copyright等)
-# 函数版本v1.0, 适用于2020/3/27
+# 函数版本v1.1, 适用于2021/8/9
 def GetPictureUrlAndInfo(BingUrl = 'https://cn.bing.com'):
     r = requests.get(BingUrl)
     soup = BeautifulSoup(r.text, 'lxml')
-    div1 = soup.find_all('link', id="bgLink")
+    div1 = soup.find_all('link', id="preloadBg")
     PictureUrl = BingUrl + div1[0].get('href')
 
-    div2 = soup.find_all('a', id="sh_cp")
-    PictureInfo = div2[0].get('title').encode("GBK", "ignore").decode("GBK")
+    div2 = soup.find_all('a', class_="title")
+    str2 = div2[0].get_text()  # "雕刻师在矿山湾创作的岩雕作品，新西兰北岛陶波湖"
+    div3 = soup.find_all('div', class_="copyright")
+    str3 = div3[0].get_text()  # "© Evgueni Zverev/Alamy"
+
+    PictureInfo = (str2 + ' (' + str3 + ')').encode("GBK", "ignore").decode("GBK")
     PictureInfo = re.sub('[\/:*?"<>|]', '-', PictureInfo)
     return [PictureUrl, PictureInfo]
 
@@ -73,9 +64,9 @@ def SetWallpaper(FullPath):
 
 # 通过爬虫获取图片URL和信息, 下载图片到指定位置, 设置墙纸
 def main():
-    print ("BingDesktop v1.01\n  by andy1990zx")
+    print ("BingDesktop v1.02\n  by andy1990zx")
 
-    LocalFolderPath = r"E:\Picture\Bing"       # 图片要被保存在的位置
+    LocalFolderPath = r"D:\Personal\Picture\Bing"       # 图片要被保存在的位置
     Picture = GetPictureUrlAndInfo()     # 获取图片URL和信息, 返回值为list
     print ("图片URL如下: \n   ", Picture[0])
     print ("图片信息如下: \n   ", Picture[1])
